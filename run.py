@@ -13,12 +13,14 @@ parser.add_argument('--neo-address', type=str, dest='address', default="bolt://l
                     help='Connections string for the Neo4J server')
 parser.add_argument('--neo-user', type=str, dest='user', default='neo4j', help='Neo4J Username')
 parser.add_argument('--neo-password', type=str, dest='password', default='neo4j', help='Neo4J Password')
+parser.add_argument('--geth-uri', type=str, dest='geth_uri', default=None, help='Geth URI')
 args = parser.parse_args()
 min_block = args.min_block
 max_block = args.max_block
 minibatch_size = args.minibatch_size
 
-geth = Geth()
+uri = urlparse(args.geth_uri)
+geth = Geth(uri.path)
 graph = Neo4J(uri=args.address, user=args.user, password=args.password)
 
 ranges = list((n, n + minibatch_size) for n in xrange(min_block, max_block, minibatch_size))
