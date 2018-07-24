@@ -12,7 +12,7 @@ parser.add_argument('--batch-size', type=int, dest='minibatch_size', default=100
 parser.add_argument('--neo-address', type=str, dest='address', default="bolt://localhost:7687",
                     help='Connections string for the Neo4J server')
 parser.add_argument('--neo-user', type=str, dest='user', default='neo4j', help='Neo4J Username')
-parser.add_argument('--neo-password', type=str, dest='passwords', default='neo4j', help='Neo4J Password')
+parser.add_argument('--neo-password', type=str, dest='password', default='neo4j', help='Neo4J Password')
 args = parser.parse_args()
 min_block = args.min_block
 max_block = args.max_block
