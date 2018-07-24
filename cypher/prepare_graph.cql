@@ -1,6 +1,6 @@
-CREATE CONSTRAINT ON ( address:Address ) ASSERT address.hash IS UNIQUE
-CREATE CONSTRAINT ON ( block:Block ) ASSERT block.hash IS UNIQUE
-CREATE CONSTRAINT ON ( transaction:Transaction ) ASSERT transaction.hash IS UNIQUE
+CREATE CONSTRAINT ON ( address:Address ) ASSERT address.hash IS UNIQUE;
+CREATE CONSTRAINT ON ( block:Block ) ASSERT block.hash IS UNIQUE;
+CREATE CONSTRAINT ON ( transaction:Transaction ) ASSERT transaction.hash IS UNIQUE;
 
 
 WITH range(2011, 2018) AS years, range(1,12) as months
@@ -21,5 +21,5 @@ FOREACH(year IN years |
                       ELSE range(1,30)
                     END) |
       CREATE (d:Day {day: day})
-      MERGE (m)-[:HAS_DAY]->(d))))
+      MERGE (m)-[:HAS_DAY]->(d))));
 
