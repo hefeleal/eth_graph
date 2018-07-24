@@ -3,6 +3,7 @@ from eth_graph.ethereum.geth import Geth
 from tqdm import tqdm
 from urllib3.connectionpool import xrange
 import argparse
+from urllib.parse import urlparse
 
 parser = argparse.ArgumentParser(description='Import geth transactions in Neo4J')
 parser.add_argument('--start-block', type=int, dest='min_block', default=4220099, help='start block number')
