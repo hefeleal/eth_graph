@@ -25,6 +25,10 @@ class Transaction():
         pass
 
     @property
+    def nonce(self) ->str:
+        pass
+
+    @property
     def __hash__(self) ->str:
         pass
 
@@ -98,6 +102,10 @@ class GethTransaction(Transaction):
     @property
     def input(self):
         return self.trans_data['input']
+
+    @property
+    def nonce(self):
+        return self.trans_data['nonce']
 
     @property
     def hash(self):
