@@ -25,21 +25,20 @@ class Neo4J:
 
         for trans in block.transactions:
             tx.run("""MATCH (b:Block {hash:$block_hash})
-                        MERGE (tx:Transaction {hash:$tx_hash})
+                        MERGE (tx:Transaction {hash:$tx_hash, input:$input})
                         SET tx.value=$value
                       MERGE (b)<-[:TX_FROM_BLOCK]-(tx)
                       MERGE (from:Address {hash:$from_address})
                       MERGE (from)<-[f:TX_FROM]-(tx)""",
                    tx_hash=trans.hash, value=trans.value, block_hash=block.hash,
-                   from_address=trans.from_address)
+                   from_address=trans.from_address, input=trans.input)
 
-            if trans.to_address:
-                tx.run("""
-                        MATCH (tx:Transaction {hash:$tx_hash})
-                        MERGE (to:Address {hash:$to_address})
-                        MERGE (to)<-[f:TX_TO]-(tx)
-                        """,
-                       tx_hash=trans.hash, to_address=trans.to_address)
+            tx.run("""
+                    MATCH (tx:Transaction {hash:$tx_hash})
+                    MERGE (to:Address {hash:$to_address})
+                    MERGE (to)<-[f:TX_TO]-(tx)
+                    """,
+                   tx_hash=trans.hash, to_address=trans.to_address)
 
     def save_blocks(self, blocks: Iterable[Block]):
         with self._driver.session() as session:
