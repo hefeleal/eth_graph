@@ -29,6 +29,18 @@ class Transaction():
         pass
 
     @property
+    def index(self) ->str:
+        pass
+
+    @property
+    def gas(self) ->str:
+        pass
+
+    @property
+    def gas_price(self) ->str:
+        pass
+
+    @property
     def __hash__(self) ->str:
         pass
 
@@ -106,6 +118,18 @@ class GethTransaction(Transaction):
     @property
     def nonce(self):
         return self.trans_data['nonce']
+
+    @property
+    def index(self):
+        return self.trans_data['transactionIndex']
+
+    @property
+    def gas(self):
+        return self.trans_data['gas']
+
+    @property
+    def gas_price(self):
+        return self.trans_data['gasPrice']
 
     @property
     def hash(self):

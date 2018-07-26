@@ -22,13 +22,19 @@ class Neo4J:
 
         for trans in block.transactions:
             tx.run("""MATCH (b:Block {hash:$block_hash})
-                        MERGE (tx:Transaction {hash:$tx_hash, nonce:$nonce, input:$input})
+                        MERGE (tx:Transaction {hash:$tx_hash})
                         SET tx.value=$value
+                        SET tx.nonce=$nonce
+                        SET tx.input=$input
+                        SET tx.index=$index
+                        SET tx.gas=$gas
+                        SET tx.gasPrice=$gas_price
                       MERGE (b)<-[:TX_FROM_BLOCK]-(tx)
                       MERGE (from:Address {hash:$from_address})
                       MERGE (from)<-[f:TX_FROM]-(tx)""",
                    tx_hash=trans.hash, value=trans.value, block_hash=block.hash,
-                   from_address=trans.from_address, nonce=trans.nonce, input=trans.input)
+                   from_address=trans.from_address, nonce=trans.nonce, input=trans.input,
+                   index=trans.index, gas=trans.gas, gas_price=trans.gas_price)
 
             recipient = trans.to_address
             if not recipient:
